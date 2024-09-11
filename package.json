@@ -1,0 +1,12 @@
+{
+  "name": "clockify-cli-auto",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "version": "0.0.4"
+}
