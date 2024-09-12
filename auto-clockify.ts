@@ -25,7 +25,8 @@ async function performClockifyOut() {
 async function performClockifyIn(filePath: string) {
   let description = 'default';
   try {
-    const changedFiles = await $`git diff --name-only HEAD~1 HEAD | xargs -n 1 basename | paste -sd, -`.text(); 
+    const folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
+    const changedFiles = await $`cd ${folderPath} && git diff --name-only HEAD~1 HEAD | xargs -n 1 basename | paste -sd, -`.text(); 
     description = changedFiles.replace(/package.json,?/g, "").trim();
   } catch (err) {
     console.info('warning: git diff is empty');
