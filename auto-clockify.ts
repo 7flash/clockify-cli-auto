@@ -14,11 +14,11 @@ function getFormattedTime() {
 async function performClockifyOut() {
   if (inClockify) {
     console.log(`[${getFormattedTime()}] Clockify out, by interval`);
-    await $`clockify-cli out`.quiet();
+    await $`clockify-cli out`.nothrow();
 
     if (lastInTime > lastOutTime) {
       console.log(`[${getFormattedTime()}] Clockify in, restarted because of recent activity`);
-      await $`clockify-cli in --interactive=0 --description="${lastDescription}" --billable`.quiet();
+      await $`clockify-cli in --interactive=0 --description="${lastDescription}" --billable`.nothrow();
     } else {
       inClockify = false; 
     }
@@ -38,7 +38,7 @@ async function performClockifyIn(filePath: string) {
   }
   
   console.log(`[${getFormattedTime()}] Clockify in, by files update, ${description}`);
-  await $`clockify-cli in --interactive=0 --description="${description}" --billable`.quiet();
+  await $`clockify-cli in --interactive=0 --description="${description}" --billable`.nothrow();
 
   inClockify = true;
   lastInTime = Date.now();
@@ -62,7 +62,7 @@ export function startWatchingFiles(filePaths: string[], interval: number = CHECK
     if (inClockify) {
       $`clockify-cli out`.then(() => process.exit(0)).catch(() => process.exit(1));
     } else {
-      process.exit(0);
+        process.exit(0);
     }
   });
 
